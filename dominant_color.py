@@ -29,7 +29,7 @@ def print_color(color, percent):
     hex = "#{:02x}{:02x}{:02x}".format(color[0], color[1], color[2])
 
     color = list(map(str, color))
-    print('rbg(' + color[0] + ', ' + color[1] + ', ' + color[2] + ')', end='')
+    print('rgb(' + color[0] + ', ' + color[1] + ', ' + color[2] + ')', end='')
     print(' == ', end='')
     print(hex.upper(), end='')
     print(' -> ' + '{0:.2f}'.format(percent*100) + '%')
