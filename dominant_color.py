@@ -1,8 +1,8 @@
 import argparse
 import cv2
+import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
-import numpy as np
 from operator import itemgetter
 from Color import Color
 from Util import verbose_print
