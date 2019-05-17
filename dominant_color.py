@@ -7,6 +7,7 @@ from operator import itemgetter
 from Color import Color
 from Util import verbose_print
 
+WIDTH_PROCESSING = 50
 
 def histogram(km):
     numLabels = np.arange(0, len(np.unique(km.labels_)) + 1)
@@ -56,7 +57,10 @@ def main():
     verbose_print('Verbose mode on...', args["verbose"])
 
     verbose_print('Parsing image... ', args["verbose"])
-    src_img = cv2.imread(args["image"])
+    img = cv2.imread(args["image"])
+    ratio = img.shape[0]/WIDTH_PROCESSING
+    src_img = cv2.resize(img, (WIDTH_PROCESSING ,int(img.shape[1]/ratio)))
+
 
     verbose_print('Reshaping img to list of pixels... ', args["verbose"])
     color_list = src_img.reshape((src_img.shape[0] * src_img.shape[1], 3))
@@ -68,13 +72,15 @@ def main():
     verbose_print('Creating histogram...', args["verbose"])
     hist = histogram(km)
     colors = get_colors(hist, km.cluster_centers_)
+    print(km.labels_)
     for c in colors:
         print(c)
 
     verbose_print('Ploting colors...', args["verbose"])
     color_bar = plot_colors(colors)
-    color_bar = cv2.resize(color_bar, (src_img.shape[0], src_img.shape[1]))
-    cv2.imshow('Dominant Colors', np.concatenate((src_img, color_bar), axis=1))
+    cv2.imshow('Image', img)
+    cv2.imshow('Histogram', color_bar)
+
     cv2.waitKey()
 
 
